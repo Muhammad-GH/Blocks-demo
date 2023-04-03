@@ -1,0 +1,28 @@
+@use '~genero-design-system/src/components/gds-paragraph' as paragraph;
+
+.wp-block-quote {
+  border-left: 0;
+  padding-left: 0;
+  font-size: 22px;
+  line-height: 28px;
+
+  p:first-of-type::before {
+    content: '“ ';
+  }
+
+  p:last-of-type::after {
+    content: '“';
+  }
+
+  p:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.wp-block-quote cite {
+  @include paragraph.size-s;
+
+  &::before {
+    content: '–';
+  }
+}

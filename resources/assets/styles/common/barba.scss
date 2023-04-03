@@ -1,0 +1,13 @@
+.barba-leave,
+.barba-enter {
+  transition: opacity 0.25s ease;
+}
+
+.barba-leave {
+  opacity: 0;
+  cursor: progress;
+}
+
+.barba-enter {
+  opacity: 1;
+}

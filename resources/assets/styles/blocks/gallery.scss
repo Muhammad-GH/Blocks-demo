@@ -1,0 +1,50 @@
+@use '~genero-design-system/src/components/gds-logo-grid' as grid;
+@use '~genero-design-system/src/components/gds-logo-grid-item' as item;
+@use 'common/breakpoints' as *;
+
+.wp-block-gallery {
+  // Override list styling
+  .blocks-gallery-grid {
+    padding-left: 0;
+  }
+
+  .blocks-gallery-grid > li {
+    margin-top: 0 !important;
+  }
+}
+
+.wp-block-gallery.is-style-logo-grid {
+  .blocks-gallery-grid {
+    @include grid.base;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @include mq($from: medium) {
+    @for $i from 1 through 8 {
+      &.columns-#{$i} .blocks-gallery-grid {
+        --gds-logo-grid-item-count: #{$i};
+      }
+    }
+  }
+
+  .blocks-gallery-item {
+    @include item.base;
+
+    // Increase specificity to override Gutenberg selector
+    &.blocks-gallery-item.blocks-gallery-item {
+      @include grid.item;
+    }
+
+    width: auto; // override Gutenberg
+
+    figure {
+      @include item.container;
+    }
+
+    img {
+      @include item.image;
+    }
+  }
+}

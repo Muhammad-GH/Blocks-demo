@@ -1,0 +1,350 @@
+@use 'common/breakpoints' as *;
+
+@forward 'variables' with ($is-editor: false !default);
+
+:root {
+  // Colors
+  --gds-color-white: #fff;
+  --gds-color-off-white: #fcfcfc;
+  --gds-color-black: #333031;
+  --gds-color-black-60: rgba(0, 0, 0, 0.6);
+  --gds-color-black-15: #d9d9d9;
+  --gds-color-ui-01: #0082d4;
+  --gds-color-ui-02: #050092;
+  --gds-color-ui-03: #0ff; // @todo: styleguide uses: #edf9ff
+  --gds-color-ui-04: #c359c6;
+  --gds-color-ui-05: #ecf9ff;
+  --gds-color-ui-06: #f5e7f5;
+  --gds-color-error: #b90014;
+  --gds-color-success: #0a9529;
+  --gradient-01: linear-gradient(var(--gds-color-white), var(--gds-color-black));
+
+  // Gutters
+  --gutter: var(--gds-spacing-m);
+
+  // Gutter between blocks
+  --block-gutter-s: var(--gds-spacing-xs);
+  --block-gutter: var(--gds-spacing-s);
+  --block-gutter-m: var(--gds-spacing-s);
+  --block-gutter-l: var(--gds-spacing-l);
+
+  @include mq($from: medium) {
+    --block-gutter-s: var(--gds-spacing-m);
+    --block-gutter-m: var(--gds-spacing-m);
+    --block-gutter: var(--gds-spacing-l);
+    --block-gutter-l: var(--gds-spacing-3xl);
+  }
+
+  // Custom gutter for the footer
+  --footer-gutter: 185px;
+
+  // Grid gutters
+  --grid-gutter: 12px;
+  --grid-column: 78px;
+
+  // @todo mobile
+  @for $i from 1 through 12 {
+    --grid-column-#{$i}: calc(var(--grid-column) * #{$i} + var(--grid-gutter) * (#{$i} - 1));
+  }
+
+  // @todo we should use `size-column` below instead.
+  @include mq($from: medium) {
+    --grid-gutter: 24px;
+    --grid-column: 78px;
+
+    @for $i from 1 through 12 {
+      --grid-column-#{$i}: calc(var(--grid-column) * #{$i} + var(--grid-gutter) * (#{$i} - 1));
+    }
+  }
+
+  // Present content widths
+  --content-top-gutter: var(--gds-spacing-2xs);
+  --viewport-gutter: 15px;
+  --content-width: var(--grid-column-8);
+  --alignwide-width: var(--grid-column-12);
+  --alignfull-width: 1310px; // @note sass variable needs to be updated
+
+  @include mq($from: medium) {
+    --content-top-gutter: var(--gds-spacing-m);
+  }
+
+  /**
+   * GDS variable overrides.
+   */
+  // Sizes (columns plus in-between gutters)
+  --size-column: 78px;
+  --size-col-1: var(--size-column);
+  --size-col-2: calc(var(--size-column) * 2 + var(--gutter));
+  --size-col-3: calc(var(--size-column) * 3 + var(--gutter) * 2);
+  --size-col-4: calc(var(--size-column) * 4 + var(--gutter) * 3);
+  --size-col-5: calc(var(--size-column) * 5 + var(--gutter) * 4);
+  --size-col-6: calc(var(--size-column) * 6 + var(--grid-gutter) * 5);
+  --size-col-8: calc(var(--size-column) * 8 + var(--grid-gutter) * 7);
+  --size-col-12: calc(var(--size-column) * 12 + var(--grid-gutter) * 11);
+
+  // Spacing
+  --gds-spacing-3xs: 4px;
+  --gds-spacing-2xs: 8px;
+  --gds-spacing-xs: 12px;
+  --gds-spacing-s: 16px;
+  --gds-spacing-m: 24px;
+  --gds-spacing-l: 32px;
+  --gds-spacing-xl: 40px;
+  --gds-spacing-2xl: 48px;
+  --gds-spacing-3xl: 60px;
+  --gds-spacing-4xl: 80px;
+  --gds-spacing-5xl: 100px;
+  --gds-spacing-6xl: 120px;
+
+  // Card
+  --gds-card-width: 100%;
+  --gds-card-border-radius: 15px;
+  --gds-card-border: none;
+  --gds-card-box-shadow: 2px 3px 8px #0000001f;
+  --gds-card-box-shadow-hover: 2px 4px 8px #0003;
+  --gds-card-box-shadow-active: var(--gds-card-box-shadow-hover);
+
+  // Media Card
+  --gds-media-card-media-height: calc(371 / 486 * 100%);
+  --gds-media-card-media-padding: var(--gds-spacing-m) var(--gds-spacing-m) 0 var(--gds-spacing-m);
+  --gds-media-card-content-padding: var(--gds-spacing-m);
+  --gds-media-card-paragraph-gutter: var(--gds-spacing-3xs);
+  --gds-media-card-display: flex;
+
+  @include mq($until: medium) {
+    --gds-media-card-media-padding: var(--gds-spacing-s);
+    --gds-media-card-content-padding: var(--gds-spacing-s);
+  }
+
+  // Tags
+  --gds-tag-padding: var(--gds-spacing-3xs) var(--gds-spacing-xs);
+  --gds-tag-color: var(--gds-color-ui-02);
+  --gds-tag-background-color: var(--gds-color-white);
+  --gds-tag-border: solid 1px var(--gds-color-ui-02);
+  --gds-tag-border-radius: 10px;
+  --gds-tag-line-height: 1;
+
+  // Labels
+  --gds-label-font-family: var(--gds-body-font-family);
+  --gds-label-text-transform: none;
+  --gds-label-s-font-weight: 400;
+  --gds-label-m-font-weight: 400;
+  --gds-label-l-font-weight: 400;
+  --gds-label-xl-font-weight: 400;
+  --gds-label-s-letter-spacing: 0;
+  --gds-label-m-letter-spacing: 0;
+  --gds-label-l-letter-spacing: 0;
+  --gds-label-xl-letter-spacing: 0;
+
+  // Tag group
+  --gds-tag-group-gutter-x: var(--gds-spacing-2xs);
+  --gds-tag-group-gutter-y: var(--gds-spacing-3xs);
+
+  // Body
+  --gds-global-outline-focus: none;
+  --gds-body-font-family: 'Poppins', helvetica, sans-serif;
+  --gds-body-background-color: var(--gds-color-white);
+  --gds-body-text-color: var(--color-black);
+  --gds-body-font-size: 15px;
+  --gds-body-font-weight: 300;
+  --gds-body-line-height: 24px;
+
+  // Paragraph, T
+  --gds-paragraph-gutter: var(--gds-spacing-l);
+  --gds-paragraph-xs-font-size: 10px;
+  --gds-paragraph-xs-line-height: 12px;
+  --gds-paragraph-s-font-size: 14px;
+  --gds-paragraph-s-line-height: 18px;
+  --gds-paragraph-m-font-size: 15px;
+  --gds-paragraph-m-line-height: 24px;
+  --gds-paragraph-l-font-size: 16px;
+  --gds-paragraph-l-line-height: 28px;
+
+  // Heading Typography
+  --gds-heading-color: inherit;
+  --gds-heading-line-height: 1;
+  --gds-heading-font-family: 'Poppins', helvetica, sans-serif;
+
+  // Heading 2XS
+  --gds-heading-2xs-font-family: var(--gds-heading-font-family);
+  --gds-heading-2xs-font-weight: 500;
+  --gds-heading-2xs-font-size: 14px;
+  --gds-heading-2xs-line-height: 17px;
+  --gds-heading-2xs-text-transform: none;
+  --gds-heading-2xs-letter-spacing: 0.28px;
+  --gds-heading-2xs-margin-top: var(--gds-spacing-s);
+  --gds-heading-2xs-margin-bottom: var(--gds-spacing-2xs);
+
+  // Heading XS
+  --gds-heading-xs-font-family: var(--gds-heading-font-family);
+  --gds-heading-xs-font-weight: 500;
+  --gds-heading-xs-font-size: 16px; // not in style guide but used in product cards
+  --gds-heading-xs-line-height: 20px;
+  --gds-heading-xs-text-transform: none;
+  --gds-heading-xs-letter-spacing: 0.28px;
+  --gds-heading-xs-margin-top: var(--gds-spacing-s);
+  --gds-heading-xs-margin-bottom: var(--gds-spacing-2xs);
+
+  // Heading S
+  --gds-heading-s-font-family: var(--gds-heading-font-family);
+  --gds-heading-s-font-size: 20px;  // not in style guide but shown in product cards
+  --gds-heading-s-line-height: 24px;
+  --gds-heading-s-letter-spacing: 0.4px;
+  --gds-heading-s-text-transform: none;
+  --gds-heading-s-letter-spacing: 0.32px;
+  --gds-heading-s-margin-top: var(--gds-spacing-s);
+  --gds-heading-s-margin-bottom: var(--gds-spacing-2xs);
+
+  // Heading M
+  --gds-heading-m-font-family: var(--gds-heading-font-family);
+  --gds-heading-m-font-weight: 600;
+  --gds-heading-m-font-size: 20px; // not in style guide but shown in product price
+  --gds-heading-m-line-height: 24px;
+  --gds-heading-m-text-transform: none;
+  --gds-heading-m-letter-spacing: 0.4px;
+  --gds-heading-m-margin-top: var(--gds-spacing-s);
+  --gds-heading-m-margin-bottom: var(--gds-spacing-2xs);
+
+  // Heading L
+  --gds-heading-l-font-family: var(--gds-heading-font-family);
+  --gds-heading-l-font-weight: 600;
+  --gds-heading-l-font-size: 28px;
+  --gds-heading-l-line-height: 32px;
+  --gds-heading-l-text-transform: none;
+  --gds-heading-l-letter-spacing: 0.56px;
+  --gds-heading-l-margin-top: var(--gds-spacing-s);
+  --gds-heading-l-margin-bottom: var(--gds-spacing-2xs);
+
+  // Heading XL
+  --gds-heading-xl-font-family: var(--gds-heading-font-family);
+  --gds-heading-xl-font-weight: 600;
+  --gds-heading-xl-font-size: 28px;
+  --gds-heading-xl-line-height: 32px;
+  --gds-heading-xl-text-transform: none;
+  --gds-heading-xl-letter-spacing: 0.56px;
+  --gds-heading-xl-margin-top: var(--gds-spacing-s);
+  --gds-heading-xl-margin-bottom: var(--gds-spacing-2xs);
+
+  // Increase font size for screens larger than ipads (780px)
+  @include mq($from: medium) {
+    --gds-heading-xs-font-size: 16px;
+    --gds-heading-xs-line-height: 20px;
+    --gds-heading-xs-letter-spacing: 0.32px;
+    --gds-heading-m-font-size: 28px;
+    --gds-heading-m-line-height: 34px;
+    --gds-heading-m-letter-spacing: 0.56px;
+    --gds-heading-l-font-size: 34px;
+    --gds-heading-l-line-height: 40px;
+    --gds-heading-l-letter-spacing: 0.68px;
+    --gds-heading-xl-font-size: 40px;
+    --gds-heading-xl-line-height: 52px;
+    --gds-heading-xl-letter-spacing: 0.96px;
+  }
+
+  // Buttons
+  --gds-button-font-family: 'Poppins', helvetica, sans-serif;
+  --gds-button-color: var(--gds-color-white);
+  --gds-button-color-hover: var(--gds-button-color);
+  --gds-button-border: solid 2px var(--gds-button-background-color);
+  --gds-button-border-radius: 100px;
+  --gds-button-text-transform: none;
+  --gds-button-background-color: var(--gds-color-ui-02);
+  --gds-button-background-color-hover: #4040ad; // 75% opacity
+  --gds-button-background-color-focus: var(--gds-color-ui-03);
+  --gds-button-background-color-disabled: var(--gds-color-black-60);
+  --gds-button-font-weight: 400;
+  --gds-button-icon-gutter: 16px;
+  // Precise vertical position is dependent on the font. So you might need to adjust this.
+  --gds-button-m-padding: 10px 14px 8px 14px;
+  --gds-button-m-letter-spacing: 0;
+  --gds-button-m-font-size: 16px;
+  --gds-button-s-padding: 6px 10px 6px 10px;
+  --gds-button-s-letter-spacing: 0;
+  --gds-button-s-font-size: 13px;
+  --gds-button-xs-padding: 6px 12px 6px 12px;
+  --gds-button-xs-letter-spacing: 0;
+  --gds-button-xs-font-size: 10px;
+
+  // Links
+  --gds-link-outline-focus: none;
+
+  // Navigation
+  --gds-hamburger-color: var(--gds-color-ui-02);
+  --gds-navigation-color: var(--gds-color-ui-02);
+  --gds-navigation-underline-color: var(--gds-color-ui-02);
+  --gds-navigation-background: var(--gds-color-white);
+  --gds-navigation-mobile-height: var(--gds-navigation-height);
+  --gds-navigation-desktop-height: var(--gds-navigation-height);
+  --gds-navigation-height: 65px;
+  --gds-navigation-mobile-extensions-border-top: none;
+
+  @include mq($from: desktopmenu) {
+    --gds-navigation-height: auto;
+  }
+
+  @include mq($from: wide) {
+    --gds-navigation-height: 76px;
+  }
+
+  // Menu
+  --menu-text-align: left;
+  --gds-menu-item-font-family: var(--gds-body-font-family);
+  --gds-menu-item-font-weight: 400;
+  --gds-menu-item-font-size: 14px;
+  --gds-menu-item-line-height: 24px;
+  --gds-menu-item-text-transform: none;
+  --gds-menu-item-letter-spacing: 0;
+  --gds-menu-item-background-color-active: transparent;
+  --gds-menu-item-padding-horizontal: var(--gds-spacing-2xs) 8px;
+  --gds-menu-item-underline-active: none;
+  --gds-menu-link-outline-focus: none;
+
+  // Submenu
+  gds-submenu {
+    --gds-submenu-background: var(--gds-color-white);
+    --gds-submenu-max-width: 200px;
+    --gds-menu-item-font-size: 14px;
+    --gds-menu-item-line-height: var(--gds-paragraph-s-line-height);
+    --gds-menu-item-font-weight: 400;
+    --gds-navigation-color: var(--gds-color-black);
+    --gds-menu-item-padding-horizontal: var(--gds-spacing-2xs) var(--gds-spacing-s);
+  }
+
+  // Search
+  --gds-search-form-input-width: 200px;
+  --gds-search-form-input-width-focus: var(--gds-search-form-input-width);
+  --gds-search-form-outline-focus: none;
+
+  // Hamburger icon
+  --gds-hamburger-width: 20px;
+  --gds-hamburger-color: currentColor;
+  --gds-hamburger-thickness: 2px;
+  --gds-hamburger-line-separation: 6px;
+  --gds-hamburger-border-radius: 2px;
+
+  // Form
+  --gds-select-arrow-image: svg-load('../../node_modules/@fortawesome/fontawesome-pro/svgs/regular/angle-down.svg', fill=#050092);
+  --gds-input-border-focus: 0;
+  --gds-input-font-size: 16px;
+  --gds-input-font-weight: 300;
+  --gds-input-padding: 13px var(--gds-spacing-s);
+
+  // Accordion
+  --gds-accordion-color: var(--gds-color-black);
+  --gds-accordion-background: var(--gds-color-white);
+  --gds-accordion-content-color: var(--gds-color-black);
+  --gds-accordion-content-background: var(--gds-color-white);
+  --gds-accordion-expanded-header-background: transparent;
+  --gds-accordion-header-padding: 16px;
+  --gds-accordion-padding: 0 16px 16px;
+  --gds-accordion-border: none;
+  --gds-accordion-border-radius: 15px;
+  --gds-accordion-box-shadow: 1px 1px 8px #0000001f;
+
+  gds-accordion {
+    --gds-label-xl-font-size: 17px;
+    --gds-icon-font-size: 24px;
+    --gds-icon-color: var(--gds-color-black);
+    --gds-icon-color-hover: var(--gds-color-black);
+  }
+}

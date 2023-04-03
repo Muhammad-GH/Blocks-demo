@@ -1,0 +1,140 @@
+/**
+ * GDS
+ */
+@use 'config';
+@use '~genero-design-system/src/components/gds-button' as button;
+@use '~genero-design-system/src/components/gds-text-button' as text-button;
+
+/**
+ * Button
+ */
+.wp-block-button {
+  &__link {
+    @include button.base;
+
+    border-color: transparent;
+    justify-content: center;
+
+    &:visited {
+      color: var(--gds-button-color, inherit);
+    }
+
+    &:hover {
+      color: var(--gds-button-color, inherit); // Override gutenberg
+      // Add white overlay so that it works with all colors
+      background-color: var(--gds-button-background-color);
+      background-image: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25));
+    }
+
+    &:focus-visible {
+      --gds-button-background-color: var(--gds-color-ui-03);
+
+      background-color: var(--gds-button-background-color) !important;
+      color: var(--gds-color-ui-02);
+    }
+
+    &[disabled] {
+      cursor: default;
+
+      &:hover {
+        background-color: var(--gds-button-background-color-disabled);
+      }
+    }
+
+    &.has-ui-01-background-color,
+    &.has-error-background-color,
+    &.has-success-background-color {
+      --gds-button-color: var(--gds-color-white);
+    }
+
+    &.has-error-background-color,
+    &.has-success-background-color {
+      &:hover {
+        background-image: none;
+      }
+    }
+
+    &.has-s-size,
+    &.has-xs-size {
+      @include button.size-s;
+
+      border-width: 1px;
+    }
+
+    &.has-xs-size {
+      font-size: var(--gds-button-xs-font-size);
+      letter-spacing: var(--gds-button-xs-letter-spacing);
+      padding: var(--gds-button-xs-padding);
+    }
+  }
+
+  &.is-style-outline {
+    .wp-block-button__link {
+      border-color: var(--gds-button-background-color);
+      background-color: transparent;
+      color: var(--gds-button-background-color);
+      padding: var(--gds-button-m-padding);
+
+      &.has-text-color {
+        border-color: currentColor;
+      }
+
+      &:hover {
+        // Add ui-02 overlay so that it works with all colors
+        background-image: linear-gradient(rgba(0, 0, 146, 0.15), rgba(0, 0, 146, 0.15)); // ui-02
+
+        // If it's on a background color, use white instead
+        .has-background & {
+          background-image: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15)); // white
+        }
+      }
+
+      &:focus-visible {
+        background-color: var(--gds-color-ui-03);
+        border-color: var(--gds-color-ui-03);
+        color: var(--gds-color-ui-02);
+      }
+
+      &.has-s-size,
+      &.has-xs-size {
+        @include button.size-s;
+      }
+
+      &.has-xs-size {
+        padding: var(--gds-button-xs-padding);
+      }
+    }
+  }
+
+  &.is-style-block {
+    .wp-block-button__link {
+      background-color: var(--gds-color-ui-05);
+      color: var(--gds-color-ui-02);
+      border-radius: 8px;
+      padding: 11px;
+      border-width: 4px;
+      text-align: left;
+      line-height: 20px;
+      box-shadow: 2px 3px 8px #0000001f;
+      opacity: 1;
+      transition: box-shadow 0.2s ease-out;
+
+      &:hover {
+        box-shadow: 3px 4px 8px #0000002e;
+      }
+
+      &:focus-visible {
+        background-color: var(--gds-color-ui-05) !important;
+        color: var(--gds-color-ui-02);
+        border-color: var(--gds-color-ui-03);
+      }
+    }
+  }
+}
+
+@if config.$is-editor {
+  // Gutenberg adds a top margin, we only add bottom.
+  .wp-block-buttons > .wp-block {
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,64 @@
+@use 'common/breakpoints' as *;
+
+.single-page {
+  &__page {
+    display: grid;
+    grid-gap: var(--gds-spacing-l);
+    margin-top: var(--gds-spacing-m);
+    margin-bottom: var(--gds-spacing-m);
+    padding-left: var(--viewport-gutter);
+    padding-right: var(--viewport-gutter);
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "main"
+      "sidebar";
+
+    @include mq($from: medium) {
+      grid-template-areas: "main sidebar";
+      grid-template-columns: auto var(--grid-column-3);
+      row-gap: var(--gds-spacing-m);
+      column-gap: var(--gds-spacing-6xl);
+      margin-top: var(--gds-spacing-xl);
+      margin-bottom: var(--gds-spacing-xl);
+    }
+  }
+
+  &__sidebar {
+    grid-area: sidebar;
+
+    @include mq($until: medium) {
+      padding-left: var(--viewport-gutter);
+      padding-right: var(--viewport-gutter);
+    }
+  }
+
+  &__main {
+    grid-area: main;
+    padding-left: 0;
+    padding-right: 0;
+
+    > :first-child:first-child {
+      margin-top: 0;
+    }
+  }
+
+  &__hero {
+    margin-bottom: 0;
+  }
+
+  &__breadcrumb {
+    margin-top: var(--gds-spacing-2xs);
+    margin-bottom: var(--gds-spacing-2xs);
+    padding-left: var(--viewport-gutter);
+    padding-right: var(--viewport-gutter);
+
+    @include mq($from: medium) {
+      margin-top: var(--gds-spacing-s);
+      margin-bottom: var(--gds-spacing-s);
+    }
+
+    & + * {
+      margin-top: 0;
+    }
+  }
+}

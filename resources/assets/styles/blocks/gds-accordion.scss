@@ -1,0 +1,36 @@
+@use 'config';
+
+.wp-block-gds-accordion {
+  @if config.$is-editor {
+    input {
+      box-shadow: unset !important;
+      border: unset !important;
+      width: 100%;
+      background-color: transparent;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: 0;
+      min-width: 400px; // fix button flex
+    }
+  }
+
+  gds-accordion {
+    --gds-accordion-box-shadow: var(--gds-card-box-shadow);
+
+    &:hover,
+    &:focus,
+    &:active {
+      --gds-accordion-box-shadow: var(--gds-card-box-shadow-hover);
+    }
+  }
+
+  &:focus {
+    --gds-accordion-color: var(--gds-color-ui-02);
+    --gds-accordion-background: var(--gds-color-ui-03);
+    --gds-accordion-content-background: var(--gds-color-ui-03);
+  }
+
+  & + .wp-block-gds-accordion {
+    margin-top: calc(-1 * var(--block-gutter) + var(--gds-spacing-s));
+  }
+}

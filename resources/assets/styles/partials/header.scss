@@ -1,0 +1,469 @@
+@use 'sass:color';
+@use 'common/breakpoints' as *;
+@use '~genero-design-system/src/components/gds-paragraph' as paragraph;
+
+:root {
+  --brand-navigation-height: 24px;
+}
+
+body.admin-bar {
+  --admin-bar-height: 32px;
+
+  @media screen and (max-width: 782px) {
+    --admin-bar-height: 46px;
+  }
+}
+
+body {
+  --header-height: calc(var(--gds-navigation-height) + var(--brand-navigation-height) + var(--admin-bar-height, 0px));
+}
+
+@include mq($until: desktopmenu) {
+  * {
+    scroll-snap-margin-top: var(--header-height); // safari
+    scroll-margin-top: var(--header-height);
+  }
+}
+
+.gds-navigation-logo {
+  margin-right: calc(var(--gds-spacing-m) - var(--gds-spacing-s)); // subtract menu item padding
+
+  // @todo gds is being annoying
+  @include mq($from: desktopmenu) {
+    --gds-navigation-logo-height: 24px;
+  }
+
+  // Within this breakpoint the menu-item-height is set to auto so we need to
+  // align the logo with the menu
+  @include mq($from: desktopmenu, $until: wide) {
+    padding-top: var(--gds-spacing-m);
+  }
+}
+
+.brand-navigation {
+  display: flex;
+  justify-content: space-between;
+  padding-left: calc(var(--gds-spacing-l) - var(--gds-spacing-s));
+  padding-right: calc(var(--gds-spacing-l) - var(--gds-spacing-s));
+  background-color: var(--gds-color-ui-05);
+  color: var(--gds-color-ui-02);
+
+  --gds-menu-item-padding-horizontal: 0 var(--gds-spacing-s);
+  --gds-menu-item-padding-vertical: var(--gds-menu-item-padding-horizontal);
+  --gds-menu-item-font-size: 12px;
+  --gds-menu-item-line-height: 14px;
+
+  [slot="item"] {
+    &.active {
+      --gds-menu-item-font-weight: 500;
+      --gds-menu-item-underline: underline;
+      --gds-menu-item-underline-thickness: 2px;
+      --gds-menu-item-underline-color: var(--gds-color-ui-02);
+      --gds-menu-item-underline-offset: 5px; // safari needs 5px, chrome 4px
+      --gds-menu-item-underline-active: var(--gds-menu-item-underline);
+      --gds-menu-item-underline-thickness-active: var(--gds-menu-item-underline-thickness);
+      --gds-menu-item-underline-color-active: var(--gds-menu-item-underline-color);
+      --gds-menu-item-underline-offset-active: var(--gds-menu-item-underline-offset);
+    }
+
+    &:focus-visible {
+      --gds-menu-item-font-weight: 600;
+
+      text-decoration: underline;
+    }
+  }
+}
+
+gds-submenu {
+  --gds-menu-item-font-size: 14px;
+  --gds-menu-item-line-height: var(--gds-paragraph-s-line-height);
+  --gds-menu-item-font-weight: 400;
+  --gds-navigation-color: var(--gds-color-black);
+
+  border: 2px solid var(--gds-color-ui-02);
+  padding-top: var(--gds-spacing-2xs);
+  padding-bottom: var(--gds-spacing-2xs);
+  border-radius: 15px;
+
+  [slot="submenu-item"]:focus,
+  [slot="submenu-item"]:hover {
+    color: var(--gds-color-ui-02);
+    text-decoration: underline;
+  }
+
+  [slot="submenu-item"]:focus-visible {
+    --gds-menu-item-font-weight: 600;
+  }
+}
+
+gds-navigation {
+  display: block;
+  position: relative;
+  z-index: 1000; // Allow submenus to go above all content
+  border-bottom: solid 3px var(--gds-color-ui-05);
+
+  [slot="submenu-icon"] {
+    color: var(--gds-navigation-color);
+    // margin-bottom: calc(-1 * var(--gds-spacing-xs));
+    // margin-left: 0.5em;
+  }
+
+  [slot="desktop-extensions"] {
+    display: flex;
+    flex: 0 0 auto;
+
+    gds-menu-item i,
+    gds-menu-item svg {
+      margin-left: var(--gds-spacing-3xs);
+      color: var(--gds-navigation-color);
+    }
+  }
+
+  &:not(.hydrated) {
+    height: var(--header-height);
+  }
+
+  // When menu isnt expected to wrap, prevent layout shift
+  @include mq($from: wide) {
+    height: 100px;
+  }
+
+  // Decrease font size when menu might wrap
+  @include mq($from: desktopmenu, $until: wide) {
+    --gds-menu-item-font-size: 13px;
+  }
+}
+
+@include mq($from: desktopmenu) {
+  // Align items to the top when menu might wrap
+  .gds-navigation-container {
+    align-items: flex-start;
+  }
+
+  // Like logo, the search bar needs offset to be aligned with menu items
+  .header-search--desktop {
+    margin-top: 18px;
+  }
+
+  // Wrap menu items
+  .gds-navigation-header {
+    gds-menu {
+      display: block;
+      padding-top: var(--gds-spacing-m);
+      padding-bottom: var(--gds-spacing-m);
+
+      > [slot="item"] {
+        display: inline-block;
+
+        > [slot="link"] > gds-menu-item,
+        > gds-menu-item {
+          padding-top: 2px;
+          padding-bottom: 2px;
+        }
+      }
+    }
+
+    // Do not let the actions wrap
+    .navigation-actions gds-menu {
+      white-space: nowrap;
+    }
+
+    a[slot="link"],
+    a[slot="item"] {
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:focus-visible {
+        --gds-menu-item-font-weight: 600;
+
+        color: var(--gds-color-ui-03);
+        text-decoration: underline;
+
+        svg,
+        span {
+          text-decoration: none;
+        }
+      }
+
+      &.active {
+        --gds-menu-item-underline: underline;
+        --gds-menu-item-underline-thickness: 2px;
+        --gds-menu-item-underline-color: var(--gds-color-ui-02); // @todo
+        --gds-menu-item-underline-active: var(--gds-menu-item-underline);
+        --gds-menu-item-underline-thickness-active: var(--gds-menu-item-underline-thickness);
+        --gds-menu-item-underline-color-active: var(--gds-menu-item-underline-color);
+        --gds-menu-item-underline-offset-active: var(--gds-menu-item-underline-offset);
+        --gds-menu-item-underline-offset: var(--gds-spacing-3xs);
+      }
+    }
+  }
+}
+
+// If the menu doesnt wrap, increase the gutter to the active state underline
+@include mq($from: wide) {
+  .gds-navigation-header {
+    a[slot="link"].active,
+    a[slot="item"].active {
+      --gds-menu-item-underline-offset: var(--gds-spacing-xs);
+    }
+  }
+}
+
+.logo--mobile {
+  @include mq($from: desktopmenu) {
+    display: none;
+  }
+}
+
+.navigation-search {
+  &-icon--mobile {
+    @include mq($from: desktopmenu) {
+      display: none;
+    }
+  }
+}
+
+.language-menu {
+  gds-menu {
+    display: flex;
+
+    a {
+      &:nth-child(1) {
+        order: 1;
+      }
+
+      &:nth-child(2) {
+        order: 0;
+      }
+
+      &:nth-child(3) {
+        order: 2;
+      }
+    }
+  }
+  @include mq($until: desktopmenu) {
+    &--desktop {
+      display: none;
+    }
+  }
+
+  &--mobile {
+    margin-top: var(--gds-spacing-s);
+
+    --gds-menu-item-padding-horizontal: 0 var(--gds-spacing-s);
+    --gds-menu-item-padding-vertical: var(--gds-menu-item-padding-horizontal);
+    --gds-menu-item-font-size: 12px;
+    --gds-menu-item-line-height: 14px;
+
+    gds-menu {
+      justify-content: center;
+
+      [slot="item"] {
+        &.active {
+          --gds-menu-item-font-weight: 500;
+
+          text-decoration: underline;
+        }
+
+        &:focus-visible {
+          --gds-menu-item-font-weight: 600;
+
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+@include mq($until: desktopmenu) {
+  :root {
+    // Add a viewport gutter while taking into account the built in padding of the hamburger button
+    --gds-navigation-padding: 0 var(--gds-spacing-m) 0 calc(var(--gds-spacing-m) - var(--gds-spacing-s));
+    --gds-navigation-content-background: var(--gds-color-off-white);
+    --brand-navigation-height: 30px;
+    --navigation-overlay-height: calc(var(--app-height, 100vh) - var(--header-height));
+    --gds-navigation-padding: 0 var(--gds-spacing-xs);
+  }
+
+  .gds-navigation-header {
+    --gds-menu-item-padding-vertical: var(--gds-spacing-2xs) var(--gds-spacing-xs) var(--gds-spacing-2xs) var(--gds-spacing-xl);
+    --gds-navigation-height: auto;
+    --gds-menu-item-font-size: 18px;
+    --gds-menu-item-line-height: 28px;
+    --gds-menu-item-letter-spacing: 0.18px;
+
+    a[slot="link"],
+    a[slot="item"] {
+      &.active {
+        --gds-menu-item-underline: none;
+      }
+    }
+
+    [slot="submenu-icon"] .fa,
+    [slot="submenu-icon"] svg {
+      font-size: 16px;
+    }
+  }
+
+  gds-menu-item-nested {
+    a[slot="link"] {
+      flex: 0 1 auto;
+    }
+  }
+
+  // Make navigation sticky
+  gds-navigation {
+    display: block;
+    position: sticky;
+    top: 0;
+
+    .gds-navigation-content {
+      --gds-navigation-color: var(--gds-color-ui-02);
+
+      position: fixed; // absolute breaks sticky
+      margin-top: var(--header-height);
+      padding-top: 0;
+      height: var(--navigation-overlay-height);
+      display: flex;
+      flex-direction: column;
+      pointer-events: none; // safari is still positioned above
+      bottom: 0;
+      justify-content: flex-start;
+
+      &.open {
+        pointer-events: all;
+      }
+    }
+  }
+
+  .brand-navigation {
+    --gds-menu-item-padding-horizontal: var(--gds-spacing-2xs) var(--gds-spacing-s);
+
+    [slot="item"] {
+      display: flex; // Vertically align logo
+
+      &.active {
+        --gds-menu-item-underline-offset: 9px; // safari needs 9px, chrome 8px
+      }
+    }
+  }
+
+  // Logo is inside brand menu on mobile
+  .gds-navigation-logo {
+    display: none;
+  }
+
+  // Move hamburger icon first instead of last
+  .gds-navigation-hamburger {
+    order: -1;
+    // Make it centered as the other items
+    padding-top: 0;
+    padding-bottom: 0;
+    font-weight: 400;
+  }
+
+  .gds-navigation-container {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .gds-navigation-desktop-extensions {
+    display: block;
+    width: 100%;
+    width: calc(100% / (4 / 3));
+
+    // Grow the menu to full width
+    .navigation-actions {
+      width: 100%;
+    }
+
+    gds-menu {
+      justify-content: space-between;
+      float: right;
+    }
+  }
+
+  [slot="menu-icon"] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--gds-navigation-color);
+
+    // Always show
+    .gds-navigation-header.open &,
+    .gds-navigation-header.close & {
+      display: flex;
+    }
+
+    gds-hamburger {
+      order: -1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      span {
+        margin-top: var(--gds-spacing-2xs);
+        font-size: 12px;
+        line-height: 1;
+        order: 1;
+      }
+    }
+  }
+
+  .gds-navigation-mobile-extensions {
+    padding: 0;
+  }
+
+  [slot="mobile-extensions"] {
+    padding: var(--gds-spacing-l);
+    display: block;
+  }
+
+  [slot="desktop-extensions"] {
+    [slot="item"] {
+      color: var(--gds-navigation-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    gds-menu-item {
+      padding: var(--gds-spacing-2xs) var(--gds-spacing-xs);
+    }
+
+    .icon-menu-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .fal,
+      svg {
+        font-size: 20px;
+        order: -1;
+        margin-bottom: var(--gds-spacing-2xs);
+        margin-left: 0;
+      }
+
+      span {
+        font-size: 12px;
+        line-height: 1;
+
+        &[data-mobile-label] {
+          font-size: 0;
+          color: transparent;
+          line-height: 0;
+
+          &::before {
+            content: attr(data-mobile-label);
+            font-size: 12px;
+            line-height: 1;
+            color: var(--gds-color-ui-02);
+          }
+        }
+      }
+    }
+  }
+}

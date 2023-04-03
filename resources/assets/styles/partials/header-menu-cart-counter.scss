@@ -1,0 +1,28 @@
+@use 'common/breakpoints' as *;
+
+.menu-cart-counter {
+  background-color: var(--gds-color-ui-02);
+  color: var(--gds-color-white);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: calc(var(--gds-spacing-2xs) - 2px);
+  transform: translateY(-1px);
+  overflow: hidden;
+
+  &:empty {
+    display: none;
+  }
+
+  @include mq($until: desktopmenu) {
+    position: absolute;
+    top: var(--gds-spacing-2xs);
+    right: 0;
+  }
+}

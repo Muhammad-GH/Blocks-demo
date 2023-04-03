@@ -1,0 +1,76 @@
+@use 'common/breakpoints' as *;
+@use '~genero-design-system/src/components/gds-heading' as heading;
+
+.author-card {
+  display: grid;
+  max-width: none;
+  text-align: left;
+  padding: var(--gds-spacing-m);
+  gap: var(--gds-spacing-m);
+  position: relative;
+  grid-template-columns: 100%;
+
+  @include mq($from: medium) {
+    padding: var(--gds-spacing-m) var(--gds-spacing-s);
+    gap: var(--gds-spacing-s);
+    grid-template-columns: minmax(250px, 0.25fr) auto;
+  }
+
+  &__image {
+    text-align: center;
+
+    @include mq($until: medium) {
+      margin-left: var(--gds-spacing-xs);
+      margin-right: var(--gds-spacing-xs);
+    }
+
+    img {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    &::after {
+      display: block;
+      content: '';
+      width: 90px;
+      height: 90px;
+      background-image: url(../images/balls.svg);
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      position: absolute;
+      top: var(--gds-spacing-m);
+      right: var(--gds-spacing-m);
+
+      @include mq($until: medium) {
+        top: auto;
+        margin-top: -50px;
+      }
+    }
+  }
+
+  &__heading {
+    @include heading.size-m;
+  }
+
+  &__name {
+    @include heading.size-s;
+
+    margin-top: 0;
+  }
+
+  &__label {
+    margin-bottom: 0;
+  }
+
+  &__content {
+    position: relative; // place above floating balls
+  }
+
+  &__button {
+    @include mq($until: medium) {
+      display: block;
+      text-align: center;
+    }
+  }
+}

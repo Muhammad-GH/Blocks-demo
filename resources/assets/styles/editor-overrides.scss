@@ -1,0 +1,21 @@
+/**
+ * Styles in this file wont be prefixed with .editor-styles-wrapper unlike editor.scss
+ */
+
+@use 'config' with ($is-editor: true);
+
+p {
+  font-size: unset;
+  line-height: unset;
+  margin: unset;
+}
+
+h1,
+h2,
+h3 {
+  color: unset;
+}
+
+.editor-post-title__input {
+  box-shadow: none !important;
+}

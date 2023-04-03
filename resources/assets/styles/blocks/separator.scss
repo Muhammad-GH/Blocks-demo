@@ -1,0 +1,9 @@
+.wp-block-separator {
+  margin-top: var(--block-gutter);
+  margin-bottom: var(--block-gutter);
+
+  &.is-style-wide {
+    border-top: 0;
+    border-color: var(--gds-color-black-15);
+  }
+}

@@ -1,0 +1,87 @@
+@use '~genero-design-system/src/components/gds-input-wrapper' as input;
+@use '~genero-design-system/src/components/gds-button' as button;
+
+[type="text"],
+[type="password"],
+[type="date"],
+[type="datetime"],
+[type="datetime-local"],
+[type="month"],
+[type="week"],
+[type="email"],
+[type="number"],
+[type="search"],
+[type="tel"],
+[type="time"],
+[type="url"],
+[type="color"],
+select,
+textarea {
+  @include input.form-element-base;
+
+  border-radius: 15px;
+  box-shadow: 1px 1px 8px #0000001f;
+  background: var(--gds-color-white) no-repeat padding-box;
+  transition: all 0.2s ease-out;
+  border: 0;
+
+  &:hover {
+    box-shadow: 4px 4px 8px #0000002e;
+  }
+
+  &:focus {
+    @include input.on-focus;
+
+    box-shadow: 1px 1px 8px #0000001f;
+  }
+}
+
+::placeholder {
+  @include input.placeholder;
+}
+
+label {
+  @include input.label;
+
+  font-weight: 300;
+  font-size: var(--gds-paragraph-m-font-size);
+  margin-bottom: var(--gds-spacing-3xs);
+  display: block;
+}
+
+select {
+  @include input.form-select;
+}
+
+[type="submit"] {
+  appearance: none;
+  cursor: pointer;
+
+  @include button.base;
+  @include button.size-m;
+
+  border: 0;
+}
+
+fieldset {
+  border: 0;
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.ginput_container_consent {
+  display: flex;
+
+  > input {
+    flex: 0 0 auto;
+    margin-top: 2px;
+    margin-right: 1ch;
+  }
+
+  > label {
+    flex: 1 0 100%;
+    font-size: var(--gds-paragraph-s-font-size);
+    line-height: var(--gds-paragraph-s-line-height);
+  }
+}

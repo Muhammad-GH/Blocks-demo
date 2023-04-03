@@ -1,0 +1,38 @@
+@use 'common/breakpoints' as *;
+@use '~genero-design-system/src/components/gds-heading' as heading;
+@use '~genero-design-system/src/components/gds-button' as button;
+
+.wp-block-person-list {
+  .department {
+    margin-top: var(--gds-spacing-l);
+  }
+
+  .department__name {
+    margin-bottom: var(--gds-spacing-m);
+
+    @include mq($until: medium) {
+      @include heading.size-m;
+
+      text-align: center;
+      margin-bottom: var(--gds-spacing-m);
+    }
+  }
+
+  .department__list .grid {
+    justify-content: flex-start;
+  }
+
+  @include mq($until: medium) {
+    .wp-block-buttons {
+      column-gap: var(--gds-spacing-2xs);
+      row-gap: var(--gds-spacing-xs);
+      justify-content: center;
+    }
+
+    .wp-block-button__link {
+      @include button.size-s;
+
+      border-width: 1px;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+.sidebar {
+  > h3 {
+    margin-bottom: var(--gds-spacing-s);
+    text-align: center;
+  }
+
+  > .wp-block-article-list {
+    margin-top: var(--gds-spacing-s);
+  }
+}

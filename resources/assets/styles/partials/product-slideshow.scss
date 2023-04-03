@@ -1,0 +1,84 @@
+@use '~genero-design-system/src/components/gds-card' as card;
+
+.product-slideshow {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--grid-column-3);
+  margin-left: auto;
+  margin-right: auto;
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--gds-color-ui-02);
+    user-select: none;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    cursor: pointer;
+  }
+
+  .swiper-container {
+    grid-area: carousel;
+    width: 100%;
+    user-select: none;
+
+    // Avoid FOUC
+    overflow: hidden;
+  }
+
+  .swiper-button-prev {
+    grid-area: prev;
+  }
+
+  .swiper-button-next {
+    grid-area: next;
+  }
+
+  &__main,
+  & > a > img {
+    @include card.card;
+
+    padding: var(--gds-spacing-s) !important; // override swiper-container
+    transition: box-shadow 0.2s ease-out;
+
+    .swiper-container:not(.swiper-container-initialized) {
+      .swiper-slide:not(:first-child) {
+        display: none;
+      }
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      box-shadow: var(--gds-card-box-shadow-hover);
+    }
+
+    &:focus {
+      border: 4px solid #0ff;
+    }
+  }
+
+  // Avoid FOUC
+  &__pager {
+    display: grid;
+    grid-gap: var(--gds-spacing-2xs);
+    grid-template-areas: "prev carousel next";
+    grid-template-columns: 0fr auto 0fr;
+    margin-top: var(--gds-spacing-s);
+    box-sizing: border-box;
+    width: 100%;
+
+    // Avoid FOUC
+    .swiper-wrapper {
+      display: flex;
+    }
+
+    // Avoid FOUC
+    .swiper-slide {
+      width: 50.25px;
+      margin-right: 12px;
+    }
+  }
+}

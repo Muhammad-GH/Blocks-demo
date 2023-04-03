@@ -1,0 +1,9 @@
+wp-block-gds-media-card {
+  margin: var(--gds-spacing-m);
+}
+
+.is-style-link-card {
+  --gds-media-card-width: 384px;
+  --gds-media-card-media-height: 150px;
+  --gds-media-card-object-fit: contain;
+}

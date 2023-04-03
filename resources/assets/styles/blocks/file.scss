@@ -1,0 +1,11 @@
+.wp-block-file {
+  margin-bottom: var(--block-gutter-s);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  & + & {
+    margin-top: calc(-1 * var(--block-gutter-s) + var(--gds-spacing-2xs));
+  }
+}

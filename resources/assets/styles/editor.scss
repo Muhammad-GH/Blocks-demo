@@ -1,0 +1,60 @@
+@use '~genero-design-system/src/styles';
+@use "~swiper/swiper";
+@use "~swiper/components/pagination/pagination";
+@use "~swiper/components/navigation/navigation";
+
+@use 'config' with ($is-editor: true);
+@use 'common/typography';
+@use 'common/fonts';
+@use 'blocks';
+@use 'components';
+
+.wp-block {
+  max-width: var(--content-width);
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &[data-align="wide"] {
+    max-width: var(--alignwide-width);
+  }
+
+  &[data-align="full"] {
+    max-width: var(--alignfull-width);
+  }
+}
+
+// Disable links rendered in ACF blocks
+.acf-block-preview [href]:not([href^="#"]) {
+  pointer-events: none;
+}
+
+.acf-block-fields {
+  [type="text"],
+  [type="password"],
+  [type="date"],
+  [type="datetime"],
+  [type="datetime-local"],
+  [type="month"],
+  [type="week"],
+  [type="email"],
+  [type="number"],
+  [type="search"],
+  [type="tel"],
+  [type="time"],
+  [type="url"],
+  [type="color"],
+  select,
+  textarea {
+    box-shadow: 0 0 0 transparent;
+    border-radius: 4px;
+    border: 1px solid #8c8f94;
+    background-color: #fff;
+    color: #2c3338;
+  }
+}

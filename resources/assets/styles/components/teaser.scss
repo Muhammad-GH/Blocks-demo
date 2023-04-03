@@ -1,0 +1,572 @@
+@use 'config';
+@use 'common/breakpoints' as *;
+@use '~genero-design-system/src/components/gds-heading' as heading;
+@use '~genero-design-system/src/components/gds-paragraph' as paragraph;
+@use '~genero-design-system/src/components/gds-card' as card;
+@use '~genero-design-system/src/components/gds-media-card' as media-card;
+@use '~genero-design-system/src/components/gds-button' as button;
+
+/**
+ * By default teasers content is stacked.
+ */
+.teaser {
+  @include card.card;
+  @include media-card.media-card;
+
+  //--media-card-width: 100%;
+  // --media-card-height: 100%;
+  // --card-height: 100%;
+  // --gds-link-height: 100%;
+  transition: box-shadow 0.2s ease-out;
+
+  &__image {
+    @include media-card.media;
+
+    img {
+      @include media-card.image;
+    }
+  }
+
+  &__content {
+    @include media-card.content;
+  }
+
+  &__excerpt {
+    @include media-card.description;
+
+    font-size: 14px;
+    line-height: 1.4;
+    max-height: calc(14px * 1.4 * 2);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__headline {
+    @include media-card.headline;
+    @include paragraph.size-m;
+
+    font-size: 14px;
+    line-height: 18px;
+
+    a {
+      color: inherit;
+      font-weight: 300;
+    }
+  }
+
+  &__title {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  &__link::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  a:not(.teaser__link) {
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__tags {
+    @include media-card.tags;
+
+    margin-top: var(--gds-spacing-xs);
+    margin-bottom: calc(-1 * var(--gds-tag-group-gutter-y));
+
+    gds-tag gds-label {
+      overflow: hidden;
+    }
+  }
+
+  &--product {
+    .teaser__headline {
+      @include paragraph.size-xs;
+
+      color: var(--gds-color-black-60);
+
+      // @todo upstream
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .teaser__price {
+      @include heading.size-s;
+
+      color: var(--gds-color-ui-02);
+      margin-top: var(--gds-spacing-2xs);
+    }
+
+    @include mq($until: medium) {
+      flex-direction: row;
+      text-align: left;
+
+      .teaser__image {
+        height: auto;
+        padding: 0;
+        // margin: 0;
+        flex: 0 0 clamp(50px, 20vw, 80px);
+        margin-right: 0;
+
+        img {
+          position: static;
+          height: auto;
+        }
+      }
+
+      .teaser__title {
+        hyphens: auto;
+      }
+
+      .teaser__tags {
+        margin-top: var(--gds-spacing-xs);
+      }
+
+      .teaser__content {
+        padding-left: var(--gds-spacing-xs);
+      }
+
+      .teaser__excerpt {
+        font-size: 12px;
+        word-break: break-word;
+      }
+    }
+  }
+
+  &--post {
+    .teaser__author {
+      margin-top: var(--gds-spacing-2xs);
+    }
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    --gds-card-box-shadow: var(--gds-card-box-shadow-hover);
+  }
+
+  &:focus {
+    border: 4px solid #0ff;
+  }
+}
+
+/**
+ * Some variations use columns with image on the left
+ */
+.teaser.is-wide {
+  --gds-media-card-content-padding: var(--gds-spacing-s);
+
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @include mq($until: medium) {
+    --gds-heading-s-font-weight: 500;
+    --gds-heading-s-font-size: 16px;
+    --gds-heading-s-line-height: 20px;
+  }
+
+  &.has-image {
+    grid-template-columns: clamp(50px, 30vw, 120px) 1fr;
+  }
+
+  .teaser__image {
+    height: auto;
+    padding: 0;
+    margin: 0;
+    margin-right: 0;
+  }
+}
+
+/**
+ * Variation for featured listing blocks
+ */
+.teaser.is-featured {
+  @include mq($until: medium) {
+    --gds-media-card-content-padding: var(--gds-spacing-s);
+    --gds-heading-s-font-weight: 500;
+    --gds-heading-s-font-size: 16px;
+    --gds-heading-s-line-height: 20px;
+
+    text-align: left;
+    display: grid;
+    grid-template-columns: 1fr;
+
+    &.has-image {
+      grid-template-columns: clamp(50px, 30vw, 120px) 1fr;
+    }
+
+    .teaser__image {
+      height: auto;
+      padding: 0;
+      margin: 0;
+      margin-right: 0;
+    }
+  }
+
+  @include mq($from: medium) {
+    --gds-media-card-content-padding: var(--gds-spacing-s);
+    --gds-media-card-media-height: calc(324 / 486 * 100%);
+
+    .teaser__title {
+      @include heading.size-m;
+    }
+
+    .teaser__image {
+      margin-left: 0;
+      margin-right: 0;
+      margin-top: 0;
+    }
+
+    .teaser__content {
+      text-align: left;
+    }
+  }
+}
+
+.is-wide.teaser--search-result {
+  &.is-product {
+    .teaser__image {
+      object-fit: contain;
+      object-position: top;
+      margin-left: var(--gds-spacing-s);
+      margin-top: var(--gds-spacing-s);
+      margin-bottom: var(--gds-spacing-s);
+    }
+  }
+
+  mark {
+    background-color: transparent;
+    color: var(--gds-color-ui-01);
+    font-weight: 600;
+  }
+}
+
+/**
+ * Training has 3 teasers, regular wide, featured and full.
+ */
+.teaser--training {
+  // Buttons and price
+  .teaser__actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--gds-spacing-xs);
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--gds-spacing-2xs);
+
+    @include mq($until: medium) {
+      .teaser__price {
+        order: -1;
+      }
+    }
+
+    @include mq($from: medium) {
+      flex-direction: row;
+      align-items: flex-end;
+    }
+  }
+
+  .teaser__price {
+    @include mq($from: medium) {
+      text-align: right;
+    }
+
+    .amount {
+      @include heading.size-s;
+
+      color: var(--gds-color-ui-02);
+    }
+  }
+
+  // Listings
+  &.is-wide {
+    .teaser__actions.wp-block-buttons {
+      column-gap: var(--gds-spacing-2xs);
+      row-gap: var(--gds-spacing-3xs);
+    }
+  }
+
+  // Replacement of single pages
+  &.is-full {
+    .teaser__actions {
+      .wp-block-buttons {
+        row-gap: var(--gds-spacing-2xs);
+
+        &:not(:empty) {
+          margin-top: var(--block-gutter-s);
+        }
+      }
+    }
+
+    .teaser__price {
+      .amount {
+        @include heading.size-m;
+
+        color: var(--gds-color-ui-02);
+      }
+
+      .tax {
+        display: block;
+        font-size: 16px;
+      }
+    }
+
+    .teaser__meta {
+      list-style-type: none;
+      padding-left: 0;
+
+      > li:not(:first-child) {
+        margin-top: 0;
+      }
+    }
+
+    .teaser__expired-label {
+      color: var(--gds-color-error);
+      font-weight: bold;
+    }
+
+    &.is-past {
+      .teaser__actions {
+        margin-top: 0;
+      }
+
+      .teaser__price .amount {
+        color: var(--gds-color-black-60);
+      }
+
+      .teaser__image img {
+        filter: grayscale(1);
+      }
+    }
+  }
+}
+
+/**
+ * Variation where the teaser displays all content, eg on koulutukset.
+ */
+.teaser.is-full {
+  --gds-media-card-media-height: calc(300 / 792 * 100%);
+
+  .teaser__image {
+    margin: 0;
+  }
+
+  .teaser__content {
+    text-align: left;
+
+    > p,
+    > ul,
+    > ol {
+      margin-top: var(--gds-spacing-2xs);
+      margin-bottom: var(--gds-spacing-2xs);
+    }
+  }
+}
+
+/**
+ * Person teaser styles
+ */
+.teaser--person {
+  --gds-media-card-media-height: calc(290 / 282 * 100%);
+
+  padding: var(--gds-spacing-s);
+  text-align: left;
+
+  .teaser__image {
+    margin: 0;
+    overflow: visible;
+
+    &::after {
+      display: block;
+      content: '';
+      width: 38%;
+      height: 34%;
+      background-image: url(../images/balls.svg);
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      position: absolute;
+      top: auto;
+      right: 0;
+      bottom: calc(-1 * var(--gds-spacing-m));
+    }
+  }
+
+  .teaser__headline {
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .teaser__title {
+    margin-top: var(--gds-spacing-xs);
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .teaser__content {
+    padding: var(--gds-spacing-s) 0 0 0;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  @include mq($until: medium) {
+    flex-direction: row;
+    text-align: left;
+
+    .teaser__image {
+      height: auto;
+      padding: 0;
+      // margin: 0;
+      flex: 0 0 clamp(50px, 30vw, 100px);
+      margin-right: 0;
+
+      img {
+        position: static;
+        height: auto;
+      }
+
+      &::after {
+        right: auto;
+        width: 40%;
+        height: 38%;
+        left: -5px;
+        bottom: -5px;
+        transform: rotateY(180deg);
+      }
+    }
+
+    .teaser__content {
+      padding-top: 0;
+      padding-left: var(--gds-spacing-xs);
+    }
+  }
+}
+
+/**
+ * Teasers shown in the sidebar are stacked.
+ */
+.sidebar .teaser {
+  @include mq($from: medium) {
+    display: flex;
+    text-align: left;
+
+    .teaser__image {
+      padding-bottom: calc(138 / 282 * 100%);
+    }
+
+    .teaser__title {
+      @include heading.size-xs;
+    }
+
+    &.teaser--product {
+      text-align: center;
+
+      --gds-media-card-content-padding: var(--gds-spacing-s);
+
+      .teaser__image {
+        height: auto;
+        padding: 0;
+        flex: 1 0 65px;
+
+        img {
+          position: static;
+          height: 100%;
+          width: 100%;
+          object-fit: contain;
+        }
+      }
+
+      .teaser__content {
+        padding-top: var(--gds-spacing-2xs);
+      }
+    }
+  }
+}
+
+/**
+ * Partial for author component in teasers.
+ */
+.teaser-author {
+  display: grid;
+  grid-template-columns: 30px auto;
+  grid-gap: var(--gds-spacing-3xs);
+  position: relative;
+
+  &__image {
+    border-radius: 100px;
+    overflow: hidden;
+    border: solid 1px var(--gds-color-white);
+  }
+
+  &__content {
+    @include paragraph.size-xs;
+
+    font-size: 12px;
+    line-height: 14px;
+    color: var(--gds-color-black-60);
+
+    .has-background & {
+      color: var(--block-color);
+    }
+  }
+
+  &__name {
+    @include paragraph.size-xs;
+
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+
+  &__link {
+    position: static !important; // override teaser generic link
+
+    &::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+
+  &__label {
+    margin-top: 0;
+  }
+
+  &.is-style-large {
+    grid-template-columns: 55px auto;
+    grid-gap: var(--gds-spacing-xs);
+    align-items: center;
+
+    &:not(:first-child) {
+      margin-top: var(--gds-spacing-s);
+    }
+
+    &:not(:last-child) {
+      margin-bottom: var(--gds-spacing-m);
+    }
+
+    .teaser-author__name {
+      @include heading.size-s;
+
+      margin-bottom: 0;
+    }
+
+    .teaser-author__label {
+      @include paragraph.size-m;
+    }
+  }
+}

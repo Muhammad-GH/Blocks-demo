@@ -1,0 +1,10 @@
+{
+    "name": "gds/accordion",
+    "category": "layout",
+    "attributes": {
+        "text": {
+        "type": "string"
+        }
+    }
+}
+  

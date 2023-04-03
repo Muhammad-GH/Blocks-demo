@@ -1,0 +1,313 @@
+@use 'common/breakpoints' as *;
+@use '~genero-design-system/src/components/gds-paragraph' as paragraph;
+@use '~genero-design-system/src/components/gds-heading' as heading;
+
+.archive {
+  &__page {
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "breadcrumb"
+      "main"
+      "sidebar";
+
+    @include mq($from: medium) {
+      grid-template-areas:
+        "breadcrumb breadcrumb"
+        "main sidebar";
+      grid-template-columns: auto var(--grid-column-3);
+      row-gap: var(--gds-spacing-m);
+      column-gap: var(--gds-spacing-6xl);
+    }
+  }
+
+  &__sidebar {
+    grid-area: sidebar;
+
+    // On mobile, theres no grid gutter so set a small one
+    @include mq($until: medium) {
+      margin-top: var(--gds-spacing-s);
+    }
+  }
+
+  &__breadcrumb {
+    grid-area: breadcrumb;
+
+    // On mobile, theres no grid gutter so set a small one
+    @include mq($until: medium) {
+      margin-bottom: var(--gds-spacing-s);
+    }
+  }
+
+  &__header {
+    grid-area: breadcrumb;
+
+    // On mobile, theres no grid gutter so set a small one
+    @include mq($until: medium) {
+      margin-bottom: var(--gds-spacing-s);
+    }
+  }
+
+  &__main {
+    grid-area: main;
+
+    @include mq($until: medium) {
+      > h2 {
+        text-align: center;
+      }
+    }
+  }
+
+  &__footer {
+    margin-top: var(--gds-spacing-4xl);
+  }
+
+  &__filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--gds-spacing-xl);
+    margin-bottom: var(--gds-spacing-xs);
+
+    @include mq($from: medium) {
+      margin-bottom: var(--gds-spacing-m);
+    }
+
+    & + div {
+      // Remove the default block gutter and use the margin-bottom from filters
+      margin-top: 0;
+    }
+  }
+}
+
+.archive-filter {
+  @include paragraph.size-s;
+}
+
+.archive .page-title {
+  margin-bottom: var(--gds-spacing-m);
+
+  @include mq($until: medium) {
+    text-align: center;
+  }
+}
+
+.archive__page__with_header {
+  .archive__header {
+    background-color: rgb(5, 0, 146, 0.85); // ui-02
+    color: var(--gds-color-white);
+
+    @include mq($until: medium) {
+      margin-left: calc(-1 * var(--viewport-gutter));
+      margin-right: calc(-1 * var(--viewport-gutter));
+      padding-left: var(--viewport-gutter);
+      padding-right: var(--viewport-gutter);
+      display: grid;
+      grid-template-areas:
+        "hbread hbread"
+        "htitle himage"
+        "hlevelup hlevelup";
+      grid-template-columns: 1fr max-content;
+      column-gap: var(--gds-spacing-s);
+      align-items: center;
+
+      .breadcrumb {
+        grid-area: hbread;
+        margin-left: calc(-1 * var(--viewport-gutter));
+        margin-right: calc(-1 * var(--viewport-gutter));
+        padding-left: var(--viewport-gutter);
+        padding-right: var(--viewport-gutter);
+        background-color: var(--gds-color-white);
+        // Add equal spacing below breadcrumb as there is above
+        padding-bottom: var(--content-top-gutter);
+        overflow: hidden;
+      }
+
+      .header-image {
+        grid-area: himage;
+        background-color: var(--gds-color-ui-04);
+        border-radius: 100%;
+        margin-top: var(--gds-spacing-s);
+        margin-bottom: var(--gds-spacing-s);
+        position: relative;
+
+        &::before {
+          position: absolute;
+          display: block;
+          content: '';
+          background-color: rgb(5, 0, 146, 0.85); // ui-02
+          width: 70px;
+          height: 70px;
+          right: auto;
+          top: -5px;
+          z-index: -1;
+          border-radius: 100%;
+          left: -45px;
+        }
+
+        img {
+          height: 96px;
+          width: 96px;
+          object-fit: contain;
+          border-radius: 100%;
+        }
+      }
+
+      .page-title {
+        grid-area: htitle;
+        margin-top: var(--gds-spacing-m);
+        margin-bottom: var(--gds-spacing-m);
+        text-align: left;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+    }
+
+    @include mq($from: medium) {
+      border-bottom-right-radius: 100px;
+      min-height: 280px;
+      box-sizing: border-box;
+      margin-top: calc(-0.8 * var(--gds-spacing-l));
+      padding-top: var(--gds-spacing-l);
+      padding-bottom: var(--gds-spacing-l);
+      position: relative;
+      display: grid;
+      grid-template-rows: auto 0 1fr;
+      align-items: center;
+      max-width: calc(100% - 200px + 60px);
+      margin-bottom: 18px;
+
+      // Extension of the header bar that expands to the left viewport edge,
+      // behind the sidebar.
+      &::before {
+        position: absolute;
+        display: block;
+        content: '';
+        background-color: rgb(5, 0, 146, 0.85); // ui-02
+        width: 100vw;
+        height: 100%;
+        right: 100%;
+        top: 0;
+        z-index: -1;
+      }
+
+      // Floating ball behind the extension
+      &::after {
+        position: absolute;
+        display: block;
+        content: '';
+        right: auto;
+        top: 5%;
+        z-index: -2; // behind extension
+        width: 230px;
+        height: 230px;
+        margin-right: calc(var(--grid-column-3) - 70px); // move left of the sidebar
+        background-color: var(--gds-color-ui-01);
+        border-radius: 100%;
+        left: -10.5%;
+      }
+
+      // Purplish ball floating above header bar with image
+      .header-image {
+        position: absolute;
+        left: 100%;
+        margin-left: -75px; // overlap header
+        bottom: 0; // align with bottom of header
+
+        .header-image-icon {
+          border-radius: 100%;
+          width: 200px;
+          height: 200px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          z-index: 1;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 100%;
+        }
+
+        // Aqua floating ball behind the header bar
+        &::before {
+          position: absolute;
+          display: block;
+          content: '';
+          z-index: -1;
+          width: 148px;
+          height: 148px;
+          border-radius: 100%;
+          background-color: #c359c670;
+          left: 0;
+          bottom: 0;
+          margin-left: -45px;
+          margin-bottom: -30px;
+        }
+
+        &::after {
+          position: absolute;
+          display: block;
+          content: '';
+          z-index: 1;
+          width: 90px;
+          height: 90px;
+          border-radius: 100%;
+          background-color: #00ffffd9;
+          left: 24px;
+          bottom: auto;
+          margin-left: -45px;
+          margin-bottom: -30px;
+          top: -5px;
+        }
+      }
+
+      .breadcrumb {
+        color: #ffffff9a;
+        width: 100%;
+
+        a:hover {
+          color: var(--gds-color-white);
+        }
+      }
+
+      .page-title {
+        max-width: calc(100% - 100px);
+        overflow-wrap: break-word;
+      }
+    }
+
+    @include mq($from: xlarge) {
+      max-width: calc(100% - 280px + 98px);
+
+      .header-image {
+        .header-image-icon {
+          width: 260px;
+          height: 260px;
+        }
+      }
+    }
+
+    h1 {
+      @include heading.size-xl;
+    }
+
+    &.archive__header-no-image {
+
+      @include mq($from: medium) {
+        max-width: 100%;
+        min-height: 230px;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+// .archive .term-description {
+//   margin-top: var(--gds-spacing-m);
+//   margin-bottom: var(--gds-spacing-m);
+// }

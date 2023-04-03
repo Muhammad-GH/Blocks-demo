@@ -1,0 +1,100 @@
+@use 'common/breakpoints' as *;
+@use '~genero-design-system/src/components/gds-heading' as heading;
+
+.entry-summary > table:not([class]),
+table.wp-block-advgb-table.wp-block-advgb-table,
+.wp-block-table {
+  margin-top: 25px;
+  margin-bottom: 25px;
+
+  h2 + &,
+  h3 + &,
+  h4 + & {
+    margin-top: 0;
+  }
+}
+
+.entry-summary > table:not([class]),
+.wp-block-table table,
+table.wp-block-advgb-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: var(--gds-spacing-xs);
+    border: 0; // gutenberg
+  }
+
+  thead {
+    border-bottom: 0; // gutenberg
+  }
+
+  tfoot {
+    border-top: 0; // gutenberg
+  }
+
+  tr {
+    border: 0; // advtable
+  }
+
+  thead tr {
+    font-size: var(--gds-label-l-font-size);
+
+    td,
+    th {
+      padding: var(--gds-spacing-xs);
+      font-weight: 400;
+      text-align: left;
+    }
+
+    // For legacy tables, make the two-<tr> <thead> look like regular heading + one <tr>.
+    &:not(:only-child):first-child {
+      background-color: transparent;
+
+      td,
+      th {
+        @include heading.size-xs;
+
+        display: table-cell;
+        color: var(--gds-color-black);
+        padding: 0 0 var(--gds-heading-xs-margin-bottom) 0;
+      }
+    }
+  }
+
+  tbody tr {
+    font-size: 15px;
+  }
+
+  &:not(.has-background) {
+    thead tr {
+      background-color: var(--gds-color-ui-01);
+    }
+
+    tbody tr {
+      background-color: var(--gds-color-white);
+    }
+
+    tbody tr:nth-child(2n) {
+      background-color: #f4f4f4;
+    }
+  }
+
+  &:not(.has-text-color) {
+    thead th,
+    thead td {
+      color: var(--gds-color-white);
+    }
+  }
+
+  @include mq($until: small) {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+table.wp-block-advgb-table.wp-block-advgb-table {
+  max-width: var(--content-width);
+}

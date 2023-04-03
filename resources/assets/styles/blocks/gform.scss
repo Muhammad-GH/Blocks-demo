@@ -1,0 +1,108 @@
+@use 'common/breakpoints' as *;
+// @note requires Gravityforms 2.5+ with default styles not loaded.
+
+.gform_footer {
+  margin-top: var(--gds-spacing-s);
+}
+
+.gform_fields {
+  display: grid;
+  grid-gap: var(--gds-spacing-s);
+  width: 100%;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(auto-fill, auto);
+
+  .medium {
+    max-width: var(--grid-column-5);
+    max-height: 200px;
+  }
+}
+
+.gfield {
+  grid-column: 1 / -1;
+}
+
+.gform_confirmation_wrapper {
+  margin-top: var(--gds-spacing-s);
+}
+
+.gfield_label {
+  margin-bottom: var(--gds-spacing-3xs);
+  display: block;
+}
+
+// Honeypot
+.gform_validation_container {
+  display: none;
+}
+
+.gfield_required {
+  > .gfield_required_text {
+    display: none;
+  }
+
+  &::after {
+    content: '*';
+  }
+}
+
+.gfield_validation_message {
+  color: var(--gds-color-error);
+  margin-top: var(--gds-spacing-3xs);
+}
+
+.gform_validation_errors {
+  color: var(--gds-color-error);
+  margin-bottom: var(--gds-spacing-xs);
+  display: none; // hide it for these simple forms.
+
+  h2 {
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: inherit;
+    font-family: inherit;
+  }
+}
+
+.gform_title {
+  margin-bottom: var(--gds-spacing-s);
+}
+
+.gform_description {
+  display: block;
+  margin-bottom: var(--gds-spacing-s);
+}
+
+.ginput_container input.small,
+.ginput_container input.medium {
+  min-width: auto;
+  max-width: 440px;
+}
+
+.ginput_container textarea.small {
+  max-height: 100px;
+}
+
+// On background colors, use a outline button style
+.has-background .gform_footer .button {
+  border: solid 2px currentColor;
+  color: inherit;
+  background: transparent;
+
+  // If it's on a background color, use white instead
+  &:hover {
+    background-image: linear-gradient(rgba(0, 0, 146, 0.15), rgba(0, 0, 146, 0.15));
+  }
+}
+
+// Remove the spacing
+.gform_wrapper + iframe {
+  display: block !important;
+  visibility: hidden;
+  margin-top: calc(-1 * var(--block-gutter));
+  margin-bottom: 0;
+}
+
+script:first-child + .gform_wrapper {
+  margin-top: 0;
+}

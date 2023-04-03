@@ -1,0 +1,42 @@
+@use 'common/breakpoints' as *;
+
+@mixin carousel {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  margin-left: calc(-1 * var(--viewport-gutter));
+  margin-right: calc(-1 * var(--viewport-gutter));
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: scroll;
+
+  > * {
+    padding-left: var(--viewport-gutter);
+    scroll-snap-align: start;
+    width: 80%;
+    margin-left: 0;
+    margin-right: 0;
+
+    &:last-child {
+      padding-right: var(--viewport-gutter);
+    }
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.carousel {
+  @include carousel;
+}
+
+@each $name, $breakpoint in $mq-breakpoints {
+  @include mq($until: $name) {
+    .#{$name}\:carousel {
+      @include carousel;
+    }
+  }
+}

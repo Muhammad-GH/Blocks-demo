@@ -1,0 +1,33 @@
+.wp-block-columns {
+  //
+}
+
+.wp-block-columns.is-style-link-cards {
+  .wp-block-column {
+    padding: var(--gds-spacing-m) var(--gds-spacing-l);
+    border-radius: 8px;
+    box-shadow: 2px 3px 8px #0000001f;
+
+    &:not(.has-background) {
+      background-color: var(--gds-color-white);
+    }
+
+    .wp-block-buttons {
+      margin-top: var(--gds-spacing-xs);
+    }
+
+    h2, h3, h4, h5 {
+      &:not(:first-child) {
+        margin-top: var(--gds-spacing-m);
+      }
+
+      &:not(:last-child) {
+        margin-bottom: var(--gds-spacing-xs);
+      }
+    }
+
+    p {
+      margin: var(--gds-spacing-xs) 0 0;
+    }
+  }
+}

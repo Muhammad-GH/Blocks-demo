@@ -1,0 +1,76 @@
+@use '~normalize-scss/sass/normalize' as *;
+
+@include normalize($include: (
+  // document,
+  sections,
+  // grouping,
+  // links,
+  // text,
+  // embedded,
+  // forms,
+  // interactive,
+  // scripting,
+  // hidden
+));
+
+html {
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  // Hide overflowing margins.
+  overflow-x: hidden;
+  // Improve render performance by disabling some gestures.
+  touch-action: manipulation;
+}
+
+button {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+img {
+  // Get rid of gap under images
+  display: inline-block;
+  vertical-align: middle;
+
+  // Grid defaults to get images and embeds to work properly
+  max-width: 100%;
+  height: auto;
+  -ms-interpolation-mode: bicubic;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+// Avoid FOUC
+.fa,
+.fal {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  > .container {
+    flex: 1 0 auto;
+  }
+}
+
+abbr {
+  text-decoration: none;
+}

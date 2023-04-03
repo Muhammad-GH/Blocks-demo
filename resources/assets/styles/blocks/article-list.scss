@@ -1,0 +1,16 @@
+@use 'common/breakpoints' as *;
+
+.wp-block-article-list,
+.wp-block-training-list {
+  &.is-style-featured {
+    display: grid;
+    grid-template-columns: var(--grid-column-5) 1fr;
+    column-gap: var(--grid-gutter-x);
+    row-gap: var(--grid-gutter-y);
+    align-items: flex-start;
+
+    @include mq($until: medium) {
+      grid-template-columns: 1fr;
+    }
+  }
+}

@@ -1,0 +1,350 @@
+@use 'common/breakpoints' as *;
+@use '~genero-design-system/src/components/gds-card' as card;
+@use '~genero-design-system/src/components/gds-heading' as heading;
+@use '~genero-design-system/src/components/gds-paragraph' as paragraph;
+
+// Shortcode wrapper
+.is-root-container > .woocommerce {
+  max-width: var(--alignwide-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.woocommerce > .woocommerce-notices-wrapper {
+  .woocommerce-error,
+  .woocommerce-message,
+  .woocommerce-info {
+    background-color: var(--gds-color-success);
+    color: var(--gds-color-white);
+    list-style-type: none;
+    padding: var(--gds-spacing-s);
+    margin-bottom: var(--gds-spacing-m);
+    border-radius: 15px;
+  }
+
+  .woocommerce-error {
+    background-color: var(--gds-color-error);
+  }
+}
+
+.woocommerce-layout {
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: 100%;
+  grid-template-areas:
+    "progress"
+    "main"
+    "sidebar";
+  row-gap: var(--gds-spacing-m);
+  column-gap: var(--gds-spacing-l);
+
+  @include mq($from: large) {
+    grid-template-areas:
+      "progress sidebar"
+      "main     sidebar";
+    grid-template-columns: auto var(--grid-column-4);
+  }
+
+  @include mq($from: desktopmenu) {
+    column-gap: var(--gds-spacing-6xl);
+  }
+
+  &__progress-bar {
+    grid-area: progress;
+  }
+
+  &__main {
+    position: relative;
+    grid-area: main;
+  }
+
+  &__sidebar {
+    grid-area: sidebar;
+    position: relative;
+  }
+
+  // Blue summary box in sidebar and order details
+  &__box {
+    color: var(--gds-color-white);
+    background-color: var(--gds-color-ui-02);
+    border-radius: 15px;
+    padding: var(--gds-spacing-m);
+
+    &:not(:first-child) {
+      margin-top: var(--block-gutter);
+    }
+
+    &:not(:last-child) {
+      margin-bottom: var(--block-gutter);
+    }
+
+    // When in the sidebar, make it sticky
+    .woocommerce-layout__sidebar & {
+      position: sticky;
+      top: 100px;
+    }
+
+    // Overlay when changing shipping method
+    .blockUI.blockOverlay {
+      background-color: var(--gds-color-ui-02) !important;
+    }
+
+    &-actions {
+      text-align: right;
+      margin-top: var(--gds-spacing-m);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 var(--gds-spacing-s);
+      margin-top: calc(-1 * var(--gds-spacing-s));
+      margin-bottom: calc(-1 * var(--gds-spacing-s));
+
+      td,
+      th {
+        vertical-align: top;
+      }
+
+      td {
+        text-align: right;
+      }
+
+      th {
+        @include heading.size-xs;
+
+        text-align: left;
+      }
+
+      .woocommerce-Price-amount,
+      .total {
+        @include heading.size-xs;
+
+        margin-bottom: 0;
+      }
+
+      .includes_tax,
+      .tax {
+        @include paragraph.size-s;
+
+        color: #ffffff9a;
+      }
+
+      // Nested prices shouldnt be blocks
+      .includes_tax .woocommerce-Price-amount,
+      .tax .woocommerce-Price-amount,
+      .woocommerce-shipping-methods .woocommerce-Price-amount {
+        font-size: inherit;
+        display: inline;
+        font-weight: inherit;
+        line-height: inherit;
+      }
+    }
+
+    // Inside box
+    .woocommerce-shipping-methods {
+      list-style-type: none;
+      padding-left: 0 !important;
+
+      label {
+        display: inline-block;
+        padding-left: 0.5ch;
+      }
+
+      li {
+        margin-top: 0 !important;
+      }
+    }
+  }
+}
+
+.woocommerce-account .woocommerce,
+.woocommerce-cart .woocommerce,
+.woocommerce-checkout .woocommerce {
+  h1 {
+    margin-bottom: var(--block-gutter);
+  }
+
+  h2,
+  h3 {
+    @include heading.size-m;
+
+    margin-top: var(--block-gutter);
+    margin-bottom: var(--block-gutter-s);
+  }
+
+  // Shipping address section shown on checkout
+  .woocommerce-billing-fields {
+    margin-bottom: var(--block-gutter);
+  }
+
+  // Order details table shown on thankyou page and order view page.
+  .woocommerce-order-details {
+    margin-bottom: var(--block-gutter);
+
+    .woocommerce-table--order-details {
+      tbody > tr:last-child > td,
+      tbody > tr:last-child > th {
+        border-top: solid 1px var(--gds-color-white);
+        padding-top: var(--gds-spacing-s);
+      }
+    }
+  }
+
+  // Terms and conditions shown on checkout
+  .woocommerce-terms-and-conditions-wrapper {
+    margin-top: var(--block-gutter-s);
+  }
+
+  // Payment methods shown on checkout
+  .woocommerce-checkout-payment .wc_payment_methods {
+    list-style-type: none;
+    padding-left: 0;
+
+    > li {
+      @include card.card;
+
+      --gds-card-max-width: none;
+      --gds-card-width: auto;
+
+      padding: var(--gds-media-card-content-padding);
+      text-align: left;
+      display: grid;
+      grid-template-areas:
+        "radio label"
+        "radio content";
+      column-gap: var(--gds-spacing-s);
+      grid-template-columns: auto 1fr;
+
+      > input {
+        grid-area: radio;
+        margin-top: 0.4em;
+      }
+
+      > label {
+        grid-area: label;
+        margin-bottom: 0;
+      }
+
+      > div {
+        grid-area: content;
+        margin-top: var(--gds-spacing-3xs);
+
+        @include paragraph.size-s;
+      }
+    }
+  }
+
+  .woocommerce-order-overview {
+    list-style-type: none;
+    padding-left: 0;
+
+    > li {
+      margin-top: 0 !important;
+    }
+  }
+
+  // Order table on my account
+  .woocommerce-orders-table {
+    td,
+    th {
+      vertical-align: top;
+
+      @include mq($until: desktopmenu) {
+        @include paragraph.size-s;
+      }
+    }
+
+    .wp-block-buttons {
+      column-gap: var(--gds-spacing-2xs);
+      row-gap: var(--gds-spacing-2xs);
+    }
+  }
+
+  // Login & Register page
+  #customer_login {
+    display: grid;
+    grid-gap: var(--gds-spacing-l);
+
+    @include mq($from: large) {
+      grid-template-columns: 1fr 1fr;
+      grid-gap: var(--gds-spacing-l);
+    }
+
+    @include mq($from: desktopmenu) {
+      grid-gap: var(--gds-spacing-6xl);
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    .woocommerce-button {
+      margin-top: var(--block-gutter-s);
+    }
+  }
+}
+
+.woocommerce-layout--account {
+  margin-top: 0;
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: 100%;
+  grid-template-areas:
+    "breadcrumb"
+    "sidebar"
+    "main";
+
+  @include mq($from: medium) {
+    grid-template-areas:
+      "sidebar breadcrumb"
+      "sidebar main";
+    grid-template-columns: var(--grid-column-3) auto;
+    grid-template-rows: auto 1fr;
+    grid-gap: var(--gds-spacing-m);
+  }
+
+  .woocommerce-layout__breadcrumb {
+    grid-area: breadcrumb;
+
+    // On mobile, theres no grid gutter so set a small one
+    @include mq($until: medium) {
+      margin-bottom: var(--gds-spacing-s);
+    }
+  }
+
+  .woocommerce-layout__sidebar {
+    grid-area: sidebar;
+  }
+
+  .woocommerce-layout__main {
+    grid-area: main;
+
+    --content-width: 100%;
+  }
+
+  .woocommerce-MyAccount-navigation {
+    @include card.card;
+
+    --gds-card-max-width: none;
+
+    text-align: inherit;
+    padding: var(--gds-spacing-s);
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+
+      li > a {
+        color: var(--gds-color-ui-02);
+      }
+
+      li.is-active > a {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-decoration-color: currentColor;
+        text-underline-offset: 6px;
+      }
+    }
+  }
+}

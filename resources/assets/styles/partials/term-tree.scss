@@ -1,0 +1,168 @@
+@use 'common/breakpoints' as *;
+@use '~genero-design-system/src/components/gds-heading' as heading;
+@use '~genero-design-system/src/components/gds-card' as card;
+
+@include mq($until: medium) {
+  .term-tree-tabs {
+    [role="tablist"] {
+      display: grid;
+      row-gap: var(--gds-spacing-2xs);
+      margin-bottom: var(--gds-spacing-s);
+    }
+
+    [role="tab"] {
+      @include heading.base;
+      @include heading.size-xs;
+      @include card.card;
+
+      cursor: pointer;
+      text-align: inherit;
+      max-width: none;
+      padding: var(--gds-spacing-s);
+      margin-bottom: 0;
+      margin-top: 0;
+
+      > span {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      > span::after {
+        content: '';
+        margin-left: var(--gds-spacing-s);
+        mask-image: svg-load('../../node_modules/@fortawesome/fontawesome-pro/svgs/regular/angle-down.svg');
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        width: 1.5em;
+        height: 1.5em;
+        font-size: 1em;
+        color: inherit;
+        background-color: currentColor;
+      }
+
+      > [role="tabpanel"] {
+        display: block;
+        margin-top: var(--gds-spacing-s);
+        margin-bottom: var(--gds-spacing-xs);
+      }
+    }
+
+    [role="tabpanel"] {
+      display: none;
+    }
+  }
+}
+
+@include mq($from: medium) {
+  .term-tree-tabs {
+    @include card.card;
+
+    text-align: inherit;
+    padding: var(--gds-spacing-s);
+
+    &:not(:last-child) {
+      margin-bottom: var(--gds-spacing-m);
+    }
+
+    [role="tablist"] {
+      display: inline-flex;
+      border-bottom: solid 1px var(--gds-color-black-15);
+    }
+
+    [role="tab"] {
+      @include heading.base;
+
+      cursor: pointer;
+      font-family: var(--gds-heading-2xs-font-family, var(--gds-heading-font-family));
+      font-size: var(--gds-heading-2xs-font-size);
+      font-weight: var(--gds-heading-2xs-font-weight);
+      line-height: var(--gds-heading-2xs-line-height);
+      letter-spacing: var(--gds-heading-2xs-letter-spacing);
+      text-transform: uppercase;
+      color: var(--gds-color-black-60);
+      padding-bottom: 6px;
+      padding-left: 0;
+      padding-right: 0;
+      margin-bottom: -1px; // overlap tablist border
+      border-bottom: solid 2px transparent;
+      outline: none;
+
+      &:focus-visible {
+        font-weight: 600;
+        color: var(--gds-color-ui-02);
+        text-decoration: underline;
+      }
+
+      &:hover {
+        color: var(--gds-color-ui-02);
+      }
+
+      &:not(:last-child) {
+        margin-right: var(--gds-spacing-m);
+      }
+
+      &[aria-selected="true"] {
+        color: var(--gds-color-ui-02);
+        border-color: var(--gds-color-ui-02);
+      }
+    }
+
+    [role="tabpanel"] {
+      margin-top: var(--gds-spacing-m);
+
+      &[hidden] {
+        display: none;
+      }
+    }
+  }
+}
+
+.term-tree {
+  list-style-type: none;
+
+  &.is-level-0 {
+    padding-left: 0;
+  }
+
+  & &__item:not(:first-child) {
+    margin-top: var(--gds-spacing-s);
+
+    @include mq($from: medium) {
+      margin-top: var(--gds-spacing-xs);
+    }
+  }
+
+  &__link {
+    color: var(--gds-color-ui-02);
+
+    &.is-active {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-decoration-color: currentColor;
+      text-underline-offset: 6px;
+    }
+  }
+
+  // Top level items are bolded with underline when active
+  &.is-level-0 > .term-tree__item > .term-tree__link.is-active {
+    font-weight: 600;
+  }
+
+  // Second level items are always bold
+  &.is-level-1 > .term-tree__item > .term-tree__link {
+    font-weight: 600;
+  }
+
+  // Third level items have no underline
+  &.is-level-2 > .term-tree__item > .term-tree__link.is-active {
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .term-tree {
+    padding-top: var(--gds-spacing-s);
+    padding-left: var(--gds-spacing-xs);
+  }
+}

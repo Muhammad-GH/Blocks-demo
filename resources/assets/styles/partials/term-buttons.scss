@@ -1,0 +1,96 @@
+@use 'common/breakpoints' as *;
+@use '~genero-design-system/src/components/gds-button' as button;
+
+.term-buttons.is-style-grid {
+  @include mq($until: medium) {
+    display: flex;
+    justify-content: center;
+    column-gap: var(--gds-spacing-xs);
+    row-gap: var(--gds-spacing-2xs);
+    flex-wrap: wrap;
+
+    .wp-block-button.is-style-block {
+      .wp-block-button__link {
+        @include button.base;
+        @include button.size-s;
+
+        width: auto;
+        border-width: 1px;
+        border-color: var(--gds-button-background-color);
+        background-color: transparent;
+        color: var(--gds-button-background-color);
+
+        &:hover {
+          background-color: transparent;
+          // Add ui-02 overlay so that it works with all colors
+          background-image: linear-gradient(rgba(0, 0, 146, 0.15), rgba(0, 0, 146, 0.15)); // ui-02
+          color: inherit;
+
+          // If it's on a background color, use white instead
+          .has-background & {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15)); // white
+          }
+        }
+
+        &::after {
+          display: none;
+        }
+
+        &:focus-visible {
+          background-color: var(--gds-color-ui-03);
+          border-color: var(--gds-color-ui-03);
+          color: var(--gds-color-ui-02);
+        }
+
+        .button-count {
+          margin-left: 5px;
+        }
+      }
+    }
+
+    // category image only shown on desktop
+    .button-image {
+      display: none;
+    }
+  }
+
+  @include mq($from: medium) {
+    .wp-block-button.has-image {
+      min-height: 70px;
+      padding-top: 10px;
+      box-sizing: border-box;
+
+      .wp-block-button__link {
+        padding-left: calc(70px / 2 + var(--gds-spacing-xs));
+        margin-left: calc(70px / 2);
+        width: calc(100% - 70px / 2) !important;
+      }
+
+      .button-image {
+        margin-left: calc(-1 * (70px / 2));
+        width: 70px;
+        height: 70px;
+        box-sizing: border-box;
+        padding: 10px;
+        background-color: var(--gds-color-ui-01);
+        border-radius: 50%;
+        position: absolute;
+        left: 0;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+    }
+
+    .wp-block-button {
+      .wp-block-button__link {
+        .button-count {
+          display: none;
+        }
+      }
+    }
+  }
+}

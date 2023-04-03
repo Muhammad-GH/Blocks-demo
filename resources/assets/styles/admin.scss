@@ -1,0 +1,29 @@
+.wp-admin.taxonomy-product_area .wp-list-table,
+.wp-admin.taxonomy-product_cat .wp-list-table {
+  th.column-thumb,
+  td.thumb,
+  th.column-description,
+  td.description {
+    display: none;
+  }
+
+  .column-name {
+    width: 50%;
+  }
+
+  .level-1 .row-title {
+    color: rgba(0, 0, 0, 0.75);
+  }
+
+  .level-2 .row-title {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .level-3 .row-title {
+    color: rgba(0, 0, 0, 0.35);
+  }
+
+  .level-4 .row-title {
+    color: rgba(0, 0, 0, 0.25);
+  }
+}

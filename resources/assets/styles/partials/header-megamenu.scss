@@ -1,0 +1,115 @@
+@use 'common/breakpoints' as *;
+
+gds-menu-item-nested {
+  // Allow megamenu to span full width
+  position: static;
+}
+
+.megamenu {
+  --gds-navigation-color: var(--gds-color-ui-02);
+  --gds-menu-item-font-size: 16px;
+  --gds-menu-item-line-height: 20px;
+  --gds-menu-item-font-weight: 600;
+  --gds-menu-item-padding-horizontal: var(--gds-spacing-xs) 0;
+  --gds-menu-item-underline-active: underline;
+  --gds-menu-item-underline-thickness-active: 1px;
+  --gds-menu-item-underline-color-active: var(--gds-navigation-color);
+  --gds-menu-item-underline-offset-active: auto;
+
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  display: block;
+  background-color: var(--gds-color-white);
+  column-count: 3;
+  width: var(--content-width);
+  left: 50%;
+  top: var(--navigation-height, auto);
+  transform: translateX(-50%);
+  padding-top: calc(var(--gds-spacing-3xl) - var(--gds-spacing-xs));
+  padding-bottom: calc(var(--gds-spacing-3xl) - var(--gds-spacing-xs));
+
+  &::before {
+    content: '';
+    display: block;
+    transform: translateX(-50vw);
+    width: 200vw;
+    background: var(--gds-color-white);
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    border-bottom: solid 1px var(--gds-color-ui-01);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 0.2s ease;
+  }
+
+  gds-menu-item,
+  gds-nested-menu-item {
+    height: auto;
+  }
+
+  .is-megamenu-open & {
+    overflow: visible;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  // Back button and title are only shown on mobile
+  &__back,
+  &__title {
+    display: none;
+  }
+}
+
+@include mq($until: desktopmenu) {
+  [expanded] .megamenu {
+    overflow: visible;
+    visibility: visible;
+    opacity: 1;
+    top: 0;
+    box-sizing: border-box;
+    height: 100%;
+    max-height: var(--navigation-overlay-height);
+    width: 100%;
+    padding: var(--gds-spacing-3xl) 0;
+    column-count: unset;
+    overflow-y: scroll;
+    z-index: 1;
+
+    --gds-menu-item-font-weight: 400;
+
+    &__title {
+      display: block;
+      text-decoration: underline;
+      color: var(--gds-color-ui-02);
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    &__back {
+      display: flex;
+      position: absolute;
+      align-items: center;
+      color: var(--gds-color-ui-02);
+      top: var(--gds-spacing-s);
+      left: var(--gds-spacing-s);
+      font-size: 12px;
+      line-height: 14px;
+      letter-spacing: 0.06px;
+      padding-left: 0;
+      font-family: inherit;
+
+      .fal,
+      svg {
+        font-size: 25px;
+        margin-right: var(--gds-spacing-2xs);
+      }
+    }
+
+    &::before {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+@use 'common/breakpoints' as *;
+
+.breadcrumb {
+  color: var(--gds-color-black-60);
+  font-weight: 500;
+  font-size: 14px;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  .woocommerce-breadcrumb {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__delimiter {
+    padding-left: 1ch;
+    padding-right: 1ch;
+  }
+
+  > nav {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  a:focus,
+  a:hover {
+    color: var(--gds-color-ui-02);
+    text-decoration: underline;
+  }
+
+  a:focus-visible {
+    font-weight: 600;
+    outline: none;
+  }
+}

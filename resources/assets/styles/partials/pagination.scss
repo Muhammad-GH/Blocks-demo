@@ -1,0 +1,43 @@
+@use '~genero-design-system/src/components/gds-heading' as heading;
+
+ul.page-numbers {
+  display: flex;
+  list-style-type: none;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--gds-spacing-m) !important;
+  padding-left: 0 !important;
+
+  > li {
+    margin-top: 0 !important;
+  }
+}
+
+span.page-numbers,
+a.page-numbers {
+  padding: var(--gds-spacing-2xs);
+  display: flex;
+  text-decoration: none;
+  color: var(--gds-color-black-15);
+  font-family: var(--gds-heading-2xs-font-family, var(--gds-heading-font-family));
+  font-size: var(--gds-heading-2xs-font-size);
+  font-weight: var(--gds-heading-2xs-font-weight);
+  line-height: var(--gds-heading-2xs-line-height);
+  letter-spacing: var(--gds-heading-2xs-letter-spacing);
+}
+
+a.page-numbers:hover {
+  color: var(--gds-color-ui-02);
+  text-decoration: none;
+}
+
+.page-numbers.next,
+.page-numbers.prev,
+.page-numbers.current {
+  color: var(--gds-color-ui-02);
+}
+
+.page-numbers.next,
+.page-numbers.prev {
+  font-size: 12px;
+}

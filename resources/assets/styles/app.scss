@@ -1,0 +1,12 @@
+@use '~genero-design-system/src/styles';
+@use '~simplelightbox/src/simple-lightbox';
+
+@use 'config' with ($is-editor: false);
+@use 'common/reset';
+@use 'common/typography';
+@use 'common/fonts';
+@use 'common/barba';
+@use 'components';
+@use 'blocks';
+
+@use 'partials';

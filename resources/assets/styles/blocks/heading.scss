@@ -1,0 +1,45 @@
+/**
+ * GDS
+ */
+@use '~genero-design-system/src/components/gds-heading' as *;
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  @include base;
+}
+
+h1 {
+  @include size-l;
+}
+
+h2 {
+  @include size-m;
+}
+
+h3 {
+  @include size-s;
+}
+
+h4 {
+  @include size-xs;
+}
+
+h5 {
+  @include size-xs;
+}
+
+h6 {
+  @include base;
+
+  font-family: var(--gds-heading-2xs-font-family, var(--gds-heading-font-family));
+  font-size: var(--gds-heading-2xs-font-size);
+  font-weight: var(--gds-heading-2xs-font-weight);
+  line-height: var(--gds-heading-2xs-line-height);
+  text-transform: var(--gds-heading-2xs-text-transform);
+  letter-spacing: var(--gds-heading-2xs-letter-spacing);
+  margin-top: var(--gds-heading-2xs-margin-top);
+  margin-bottom: var(--gds-heading-2xs-margin-bottom);
+}

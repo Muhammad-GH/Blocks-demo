@@ -1,0 +1,137 @@
+@use 'common/breakpoints' as *;
+
+.header-search {
+  input {
+    padding: 0 0 0 var(--gds-spacing-s);
+    background-color: transparent;
+    border: 0;
+    outline: none;
+    color: inherit;
+    font-size: 16px;
+    box-shadow: none;
+    font-weight: 400;
+
+    @include mq($from: medium) {
+      font-size: 14px;
+    }
+
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+      display: none;
+    }
+
+    &:focus {
+      border: 0;
+      box-shadow: none;
+    }
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
+  [type="submit"] {
+    color: inherit;
+    font-size: 12px;
+    padding: 0;
+    padding: 0 var(--gds-spacing-s) 0 var(--gds-spacing-s);
+    border: none;
+    background-color: transparent;
+
+    &:hover {
+      background: none;
+    }
+  }
+
+  &--desktop {
+    @include mq($until: desktopmenu) {
+      display: none;
+    }
+
+    align-self: flex-start;
+    border: solid 1px var(--gds-color-ui-02);
+    border-radius: 18px;
+    display: flex;
+    width: 200px;
+    color: var(--gds-navigation-color);
+    margin-right: calc(var(--gds-spacing-m) - var(--gds-spacing-s)); // subtract menu item padding
+    height: 36px;
+    transition: background-color 0.1s ease-out;
+    background-color: rgba(255, 255, 255, 0);
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    &:focus-within {
+      border-color: var(--gds-color-ui-02);
+
+      svg {
+        color: var(--gds-color-ui-02);
+      }
+    }
+
+    gds-input-wrapper {
+      flex: 1 1 auto; // allow to both grow and shrink
+    }
+
+    input {
+      &::placeholder {
+        color: var(--gds-color-ui-02);
+        opacity: 0.66;
+      }
+    }
+
+    [type="submit"] {
+      color: inherit;
+      font-size: 12px;
+      padding: 0;
+      padding: 0 var(--gds-spacing-s) 0 var(--gds-spacing-s);
+      border: none;
+      background-color: transparent;
+
+      &:hover {
+        background: none;
+      }
+
+      &:focus {
+        border-radius: 18px;
+        margin-right: -1px;
+        margin-top: -1px;
+        margin-bottom: -1px;
+        background-color: var(--gds-color-ui-02);
+        color: var(--gds-color-white);
+        outline: none;
+
+        svg {
+          color: var(--gds-color-white);
+        }
+      }
+    }
+  }
+
+  &--mobile {
+    border-bottom: solid 1px var(--gds-color-ui-02);
+    display: flex;
+
+    gds-input-wrapper {
+      flex: 1 0 0;
+
+      input {
+        padding-left: 0;
+
+        &::placeholder {
+          color: var(--gds-color-ui-02);
+          font-weight: 300;
+        }
+      }
+    }
+
+    [type="submit"] {
+      color: var(--gds-color-ui-02);
+      padding-right: 0;
+    }
+  }
+}

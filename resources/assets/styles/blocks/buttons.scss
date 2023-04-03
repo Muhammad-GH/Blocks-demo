@@ -1,0 +1,36 @@
+@use 'config';
+@use 'common/breakpoints' as *;
+
+.wp-block-buttons {
+  column-gap: var(--gds-spacing-xs);
+  row-gap: var(--gds-spacing-s);
+
+  .wp-block-button {
+    margin-bottom: 0;
+  }
+}
+
+.wp-block-buttons.is-style-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  column-gap: var(--gds-spacing-m);
+  row-gap: var(--gds-spacing-s);
+  margin-top: var(--block-gutter-s);
+  margin-bottom: var(--block-gutter-s);
+
+  @include mq($from: large) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 0.5fr));
+  }
+
+  > .wp-block-button > .wp-block-button__link {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@if config.$is-editor {
+  // Some Gutenberg bug
+  .wp-block[data-align="center"] > .wp-block-buttons .block-editor-block-list__layout {
+    text-align: center;
+  }
+}

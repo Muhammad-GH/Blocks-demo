@@ -1,0 +1,32 @@
+@use '~genero-design-system/src/components/gds-link' as link;
+
+a {
+  @include link.base;
+}
+
+.wp-block-file > a,
+p a,
+label > a,
+li > a {
+  color: var(--gds-color-ui-01);
+  font-weight: 400;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    text-decoration: underline;
+    color: var(--gds-color-ui-02);
+    font-weight: 600;
+  }
+
+  .has-ui-01-background-color &,
+  .has-ui-02-background-color & {
+    color: var(--gds-color-ui-03);
+  }
+
+  .has-ui-05-background-color & {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,25 @@
+@use '~genero-design-system/src/components/gds-paragraph' as paragraph;
+
+.post-meta__label {
+  font-weight: 700;
+}
+
+.post-meta {
+  margin-bottom: 0;
+
+  @include paragraph.size-s;
+
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: inline;
+  }
+
+  &__category-link {
+    color: inherit;
+  }
+}
+
+.single-page__hero .post-meta__category-link {
+  color: var(--gds-color-white) !important;
+}
